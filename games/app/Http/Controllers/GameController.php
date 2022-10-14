@@ -1,8 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Http\Resources\GameCollection;
+use App\Http\Resources\GameResource;
 use App\Models\Game;
+use GuzzleHttp\Psr7\Response;
 use Illuminate\Http\Request;
 
 class GameController extends Controller
@@ -14,7 +16,7 @@ class GameController extends Controller
      */
     public function index()
     {
-        //
+        return new GameCollection(Game::all());
     }
 
     /**
@@ -25,7 +27,11 @@ class GameController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $game = Game::create($request->only([
+            'title', 'description', 'publisher', 'platform', 'category', 'price'
+        ]));
+
+        return new GameResource($game);
     }
 
     /**
@@ -36,7 +42,7 @@ class GameController extends Controller
      */
     public function show(Game $game)
     {
-        //
+        return new GameResource($game);
     }
 
     /**
@@ -48,7 +54,11 @@ class GameController extends Controller
      */
     public function update(Request $request, Game $game)
     {
-        //
+        $game->update($request->only([
+            'title', 'description', 'publisher', 'platform', 'category', 'price'
+        ]));
+        
+        return new GameResource($game);
     }
 
     /**
@@ -59,6 +69,7 @@ class GameController extends Controller
      */
     public function destroy(Game $game)
     {
-        //
+        $game->delete();
+        return response()->json(null, Response::HTTP_NO_CONTENT);
     }
 }
