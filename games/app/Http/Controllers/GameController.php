@@ -8,12 +8,38 @@ use GuzzleHttp\Psr7\Response;
 use Illuminate\Http\Request;
 
 class GameController extends Controller
+
+
+
+
+
 {
+
+
     /**
      * Display a listing of the resource.
      *
+ * @OA\Get(
+ *     path="/api/games",
+ *     description="Displays all the games",
+ *     tags={"Games"},
+     *      @OA\Response(
+        *          response=200,
+        *          description="Successful operation, Returns a list of Games in JSON format"
+        *       ),
+        *      @OA\Response(
+        *          response=401,
+        *          description="Unauthenticated",
+        *      ),
+        *      @OA\Response(
+        *          response=403,
+        *          description="Forbidden"
+        *      )
+ * )
+     *
      * @return \Illuminate\Http\Response
      */
+    
     public function index()
     {
         return new GameCollection(Game::all());
