@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 use App\Http\Resources\GameCollection;
 use App\Http\Resources\GameResource;
 use App\Models\Game;
-use GuzzleHttp\Psr7\Response;
+use Illuminate\Http\Response; 
+//\Psr7\Response;
 use Illuminate\Http\Request;
 
 class GameController extends Controller
@@ -48,9 +49,38 @@ class GameController extends Controller
     /**
      * Store a newly created resource in storage.
      *
+     * @OA\Post(
+     *      path="/api/games",
+     *      operationId="store",
+     *      tags={"Games"},
+     *      summary="Create a new Game",
+     *      description="Stores the game in the DB",
+     *      @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *            required={"title", "description", "publisher", "platform", "category", "price"},
+     *            @OA\Property(property="title", type="string", format="string", example="Sample Title"),
+     *            @OA\Property(property="description", type="string", format="string", example="Example description"),
+     *            @OA\Property(property="publisher", type="string", format="string", example="EA"),
+     *            @OA\Property(property="platform", type="string", format="string", example="PC"),
+     *            @OA\Property(property="category", type="string", format="string", example="Sports"),
+     *             @OA\Property(property="price", type="integer", format="integer", example="1")
+     *          )
+     *      ),
+     *     @OA\Response(
+     *          response=200, description="Success",
+     *          @OA\JsonContent(
+     *             @OA\Property(property="status", type="integer", example=""),
+     *             @OA\Property(property="data",type="object")
+     *          )
+     *     )
+     * )
+     *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\GameResource
      */
+
+
     public function store(Request $request)
     {
         $game = Game::create($request->only([
@@ -60,18 +90,48 @@ class GameController extends Controller
         return new GameResource($game);
     }
 
+    
+    
+
     /**
      * Display the specified resource.
-     *
+     * @OA\Get(
+    *     path="/api/games/{id}",
+    *     description="Gets a game by ID",
+    *     tags={"Games"},
+    *          @OA\Parameter(
+        *          name="id",
+        *          description="Game id",
+        *          required=true,
+        *          in="path",
+        *          @OA\Schema(
+        *              type="integer")
+     *          ),
+        *      @OA\Response(
+        *          response=200,
+        *          description="Successful operation"
+        *       ),
+        *      @OA\Response(
+        *          response=401,
+        *          description="Unauthenticated",
+        *      ),
+        *      @OA\Response(
+        *          response=403,
+        *          description="Forbidden"
+        *      )
+ * )
      * @param  \App\Models\Game  $game
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\GameResource
      */
+
+
+
     public function show(Game $game)
     {
         return new GameResource($game);
     }
 
-    /**
+     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -87,15 +147,42 @@ class GameController extends Controller
         return new GameResource($game);
     }
 
+    
+    
+
     /**
+     *
+     *
+     * @OA\Delete(
+     *    path="/api/games/{id}",
+     *    operationId="destroy",
+     *    tags={"Games"},
+     *    summary="Delete a Game",
+     *    description="Delete a Game By ID",
+     *    @OA\Parameter(name="id", in="path", description="Id of a Game", required=true,
+     *        @OA\Schema(type="integer")
+     *    ),
+     *    @OA\Response(
+     *         response=Response::HTTP_NO_CONTENT,
+     *         description="Success",
+     *         @OA\JsonContent(
+     *         @OA\Property(property="status_code", type="integer", example="204"),
+     *         @OA\Property(property="data",type="object")
+     *          ),
+     *       )
+     *      )
+     *  )
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\Game  $game
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Game $game)
+
+
+
+     public function destroy(Game $game)
     {
         $game->delete();
         return response()->json(null, Response::HTTP_NO_CONTENT);
-    }
+    } 
 }
