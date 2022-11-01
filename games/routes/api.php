@@ -19,4 +19,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+
+/*
+The api resource declares the routes to be consuemd by the API
+
+*/
+
+
 Route::apiResource('/games', GameController::class);

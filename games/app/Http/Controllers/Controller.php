@@ -15,7 +15,7 @@ use Illuminate\Routing\Controller as BaseController;
  *      title="Game API",
  *      description="Stephen Game API",
  *      @OA\Contact(
- *          email="anne.wright@iadt.ie"
+ *          email="stephengordon48@gmail.com"
  *      ),
  *     @OA\License(
  *         name="Apache 2.0",
@@ -28,7 +28,7 @@ use Illuminate\Routing\Controller as BaseController;
  *   description="Home Page",
  *   @OA\Response(
  *     response="default",
- *     description="Welcom page")
+ *     description="Welcomee page")
  *   )
  *   
  * )

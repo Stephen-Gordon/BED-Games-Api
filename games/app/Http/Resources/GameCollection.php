@@ -12,6 +12,8 @@ class GameCollection extends ResourceCollection
      * @param  \Illuminate\Http\Request  $request
      * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
      */
+
+
     public function toArray($request)
     {
         return [
@@ -22,3 +24,6 @@ class GameCollection extends ResourceCollection
         ];
     }
 }
+
+
+/* Resource Collection returns more than 1 Game / Object */;

@@ -5,17 +5,19 @@ use App\Http\Resources\GameCollection;
 use App\Http\Resources\GameResource;
 use App\Models\Game;
 use Illuminate\Http\Response; 
-//\Psr7\Response;
+
 use Illuminate\Http\Request;
 
 class GameController extends Controller
 
+//200 response = success
 
-
+//404 = page not found
+//401 = Unauthenticated
+//403 = forbidden
 
 
 {
-
 
     /**
      * Display a listing of the resource.
@@ -131,13 +133,53 @@ class GameController extends Controller
         return new GameResource($game);
     }
 
+
+
+
      /**
-     * Update the specified resource in storage.
+     *Update the specified resource in storage
+     *
+     * @OA\Put(
+     *      path="/api/games/{id}",
+     *      operationId="put",
+     *      tags={"Games"},
+     *      summary="Create a new Game",
+     *      description="Stores the game in the DB",
+     *      @OA\Parameter(
+        *          name="id",
+        *          description="Game id",
+        *          required=true,
+        *          in="path",
+        *          @OA\Schema(
+        *              type="integer")
+     *          ),
+     *      @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *            required={"id","title", "description", "publisher", "platform", "category", "price"},
+     *            @OA\Property(property="title", type="string", format="string", example="Sample Title"),
+     *            @OA\Property(property="description", type="string", format="string", example="Example description"),
+     *            @OA\Property(property="publisher", type="string", format="string", example="EA"),
+     *            @OA\Property(property="platform", type="string", format="string", example="PC"),
+     *            @OA\Property(property="category", type="string", format="string", example="Sports"),
+     *             @OA\Property(property="price", type="integer", format="integer", example="1")
+     *          )
+     *      ),
+     *     @OA\Response(
+     *          response=200, description="Success",
+     *          @OA\JsonContent(
+     *             @OA\Property(property="status", type="integer", example=""),
+     *             @OA\Property(property="data",type="object")
+     *          )
+     *     )
+     * )
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Game  $game
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\BookResource
      */
+
+
+
     public function update(Request $request, Game $game)
     {
         $game->update($request->only([

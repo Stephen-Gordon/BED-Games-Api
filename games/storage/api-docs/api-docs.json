@@ -4,7 +4,7 @@
         "title": "Game API",
         "description": "Stephen Game API",
         "contact": {
-            "email": "anne.wright@iadt.ie"
+            "email": "stephengordon48@gmail.com"
         },
         "license": {
             "name": "Apache 2.0",
@@ -38,7 +38,7 @@
                 "description": "Home Page",
                 "responses": {
                     "default": {
-                        "description": "Welcom page"
+                        "description": "Welcomee page"
                     }
                 }
             }
@@ -53,7 +53,7 @@
                 "operationId": "93736f40a135111a310e4b25ad61f30b",
                 "responses": {
                     "200": {
-                        "description": "Successful operation, Returns a list of Books in JSON format"
+                        "description": "Successful operation, Returns a list of Games in JSON format"
                     },
                     "401": {
                         "description": "Unauthenticated"
@@ -109,7 +109,7 @@
                                         "format": "string",
                                         "example": "Sports"
                                     },
-                                    "likes": {
+                                    "price": {
                                         "type": "integer",
                                         "format": "integer",
                                         "example": "1"
@@ -171,6 +171,137 @@
                     },
                     "403": {
                         "description": "Forbidden"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Games"
+                ],
+                "summary": "Create a new Game",
+                "description": "Stores the game in the DB",
+                "operationId": "put",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Game id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "id",
+                                    "title",
+                                    "description",
+                                    "publisher",
+                                    "platform",
+                                    "category",
+                                    "price"
+                                ],
+                                "properties": {
+                                    "title": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "Sample Title"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "Example description"
+                                    },
+                                    "publisher": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "EA"
+                                    },
+                                    "platform": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "PC"
+                                    },
+                                    "category": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "Sports"
+                                    },
+                                    "price": {
+                                        "type": "integer",
+                                        "format": "integer",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "integer",
+                                            "example": ""
+                                        },
+                                        "data": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Games"
+                ],
+                "summary": "Delete a Game",
+                "description": "Delete a Game By ID",
+                "operationId": "destroy",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id of a Game",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status_code": {
+                                            "type": "integer",
+                                            "example": "204"
+                                        },
+                                        "data": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 }
             }
