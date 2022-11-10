@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\GameController;
+use App\Http\Controllers\StoreController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -27,3 +28,4 @@ The api resource declares the routes to be consuemd by the API
 
 
 Route::apiResource('/games', GameController::class);
+Route::apiResource('/stores', StoreController::class);

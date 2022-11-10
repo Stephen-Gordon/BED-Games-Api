@@ -45,7 +45,8 @@ class GameController extends Controller
     
     public function index()
     {
-        return new GameCollection(Game::all());
+        //return new GameCollection(Game::all());
+        return new GameCollection(Game::with('store')->get());
     }
 
     /**
@@ -86,7 +87,14 @@ class GameController extends Controller
     public function store(Request $request)
     {
         $game = Game::create($request->only([
-            'title', 'description', 'publisher', 'platform', 'category', 'price'
+            'title', 
+            'description', 
+            'publisher', 
+            'platform', 
+            'category', 
+            'price',
+            'likes',
+            'store_id'
         ]));
 
         return new GameResource($game);
@@ -175,7 +183,7 @@ class GameController extends Controller
      * )
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\BookResource
+     * @return \Illuminate\Http\GameResource
      */
 
 
@@ -183,7 +191,14 @@ class GameController extends Controller
     public function update(Request $request, Game $game)
     {
         $game->update($request->only([
-            'title', 'description', 'publisher', 'platform', 'category', 'price'
+            'title', 
+            'description', 
+            'publisher', 
+            'platform', 
+            'category', 
+            'price',
+            'likes',
+            'store_id'
         ]));
         
         return new GameResource($game);
