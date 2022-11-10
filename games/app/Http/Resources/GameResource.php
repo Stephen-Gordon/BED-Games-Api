@@ -37,8 +37,8 @@ class GameResource extends JsonResource
             'price' => $this->price,
             'likes' => $this->likes,
             'store_id' => $this->store_id,
-            'store_address' => $this->store_address,
-            'store_name' => $this->store_name
+            'store_address' => $this->store->address,
+            'store_name' => $this->store->name
         ];
     }
 }
