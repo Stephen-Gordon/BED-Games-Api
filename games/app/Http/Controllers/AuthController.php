@@ -10,6 +10,40 @@ use Illuminate\Http\Response;
 
 class AuthController extends Controller
 {
+
+
+    /**
+     * Register a new user.
+     *
+     * @OA\Post(
+     *      path="/api/auth/register",
+     *      operationId="register",
+     *      tags={"Auth"},
+     *      summary="Register a new user",
+     *      description="User will be created",
+     *      @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *            required={"name", "email", "password"},
+     *            @OA\Property(property="name", type="string", format="string", example="User Name"),
+     *            @OA\Property(property="email", type="string", format="string", example="Email"),
+     *            @OA\Property(property="password", type="string", format="string", example="Password")
+     *          )
+     *      ),
+     *     @OA\Response(
+     *          response=200, description="Success",
+     *          @OA\JsonContent(
+     *             @OA\Property(property="status", type="integer", example=""),
+     *             @OA\Property(property="data",type="object")
+     *          )
+     *     )
+     * )
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * 
+     */
+
+
     // name, email and password should be passed in as part of the request
     public function register(Request $request)
     {
