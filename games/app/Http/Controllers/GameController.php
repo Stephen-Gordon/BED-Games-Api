@@ -46,7 +46,9 @@ class GameController extends Controller
     public function index()
     {
         //return new GameCollection(Game::all());
-        return new GameCollection(Game::with('store')->get());
+        return new GameCollection(Game::with('store')
+        ->with('platforms')
+        ->get());
     }
 
     /**
@@ -86,16 +88,16 @@ class GameController extends Controller
 
     public function store(Request $request)
     {
-        $game = Game::create($request->only([
-            'title', 
-            'description', 
-            'publisher', 
-            'platform', 
-            'category', 
-            'price',
-            'likes',
-            'store_id'
-        ]));
+        
+        $game = Game::create([
+            'title' => $request->title,
+            'description' => $request->description,
+            'category' => $request->category,
+            'price' => $request->price,
+            'store_id' => $request->store_id
+        ]);
+
+        $game->platforms()->attach($request->platforms);
 
         return new GameResource($game);
     }
@@ -164,11 +166,9 @@ class GameController extends Controller
      *      @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(
-     *            required={"id","title", "description", "publisher", "platform", "category", "price"},
+     *            required={"id","title", "description", "category", "price"},
      *            @OA\Property(property="title", type="string", format="string", example="Sample Title"),
      *            @OA\Property(property="description", type="string", format="string", example="Example description"),
-     *            @OA\Property(property="publisher", type="string", format="string", example="EA"),
-     *            @OA\Property(property="platform", type="string", format="string", example="PC"),
      *            @OA\Property(property="category", type="string", format="string", example="Sports"),
      *             @OA\Property(property="price", type="integer", format="integer", example="1")
      *          )
@@ -193,11 +193,8 @@ class GameController extends Controller
         $game->update($request->only([
             'title', 
             'description', 
-            'publisher', 
-            'platform', 
             'category', 
             'price',
-            'likes',
             'store_id'
         ]));
         

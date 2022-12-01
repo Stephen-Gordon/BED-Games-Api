@@ -27,18 +27,23 @@ class GameResource extends JsonResource
     
     public function toArray($request)
     {
+        $platforms = array();
+
+       /*   foreach ($this->$platforms as $platform){
+            array_push($platforms, $platform);
+        }  */
+     
+
         return [
             'id' => $this->id,
             'title' => $this->title,
             'description' => $this->description,
-            'publisher' => $this->publisher,
-            'platform' => $this->platform,
             'category' => $this->category,
             'price' => $this->price,
-            'likes' => $this->likes,
             'store_id' => $this->store_id,
             'store_address' => $this->store->address,
-            'store_name' => $this->store->name
+            'store_name' => $this->store->name,
+            'platforms' => $this->platforms
         ];
     }
 }

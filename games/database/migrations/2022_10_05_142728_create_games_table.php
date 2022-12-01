@@ -17,8 +17,6 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->string('description');
-            $table->string('publisher');
-            $table->string('platform');
             $table->string('category');
             $table->integer('price');
             //$table->timestamp('release_date');

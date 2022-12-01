@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Game>
  */
-class GameFactory extends Factory
+class PlatformFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,10 +17,9 @@ class GameFactory extends Factory
     public function definition()
     {
         return [
-            'title' => $this->faker->name(),
-            'description' => $this->faker->name(),
-            'category' => $this->faker->name(),
-            'price' => $this->faker->numberBetween(0,100),
+            'name' => $this->faker->name,
+            'platform_developer' => $this->faker->name,
+            'description' => $this->faker->realText
         ];
     }
 }

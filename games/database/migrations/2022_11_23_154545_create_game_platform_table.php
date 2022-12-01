@@ -13,13 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('platform_game', function (Blueprint $table) {
+        Schema::create('game_platform', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('platform_id');
             $table->unsignedBigInteger('game_id');
-
-            $table->foreign('platform_id')->references('id')->on('platforms')->onUpdate('cascade')->onDelete('restrict');
+            $table->unsignedBigInteger('platform_id');
+            
             $table->foreign('game_id')->references('id')->on('games')->onUpdate('cascade')->onDelete('restrict');
+            $table->foreign('platform_id')->references('id')->on('platforms')->onUpdate('cascade')->onDelete('restrict');
+            
             $table->timestamps();
         });
     }
@@ -31,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('platform_game');
+        Schema::dropIfExists('game_platform');
     }
 };
