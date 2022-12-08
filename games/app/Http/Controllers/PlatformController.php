@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreStoreRequest;
-use App\Http\Requests\UpdateStoreRequest;
-use App\Http\Resources\StoreCollection;
-use App\Http\Resources\StoreResource;
-use App\Models\Store;
+use App\Http\Requests\StorePlatformRequest;
+use App\Http\Requests\UpdatePlatformRequest;
+use App\Http\Resources\PlatformCollection;
+use App\Http\Resources\PlatformResource;
+use App\Models\Platform;
 
 use Illuminate\Http\Response;
 use Illuminate\Http\Request;
 
-class StoreController extends Controller
+class PlatformController extends Controller
 {
     
     //INDEX
@@ -21,12 +21,12 @@ class StoreController extends Controller
      * Display a listing of the resource.
      *
  * @OA\Get(
- *     path="/api/stores",
- *     description="Displays all the stores",
- *     tags={"Stores"},
+ *     path="/api/platforms",
+ *     description="Displays all the platforms",
+ *     tags={"Platforms"},
      *      @OA\Response(
         *          response=200,
-        *          description="Successful operation, Returns a list of Stores in JSON format"
+        *          description="Successful operation, Returns a list of Platforms in JSON format"
         *       ),
         *      @OA\Response(
         *          response=401,
@@ -44,7 +44,7 @@ class StoreController extends Controller
 
     public function index()
     {
-        return new StoreCollection(Store::paginate(1));
+        return new PlatformCollection(Platform::paginate(1));
     }
 
 
@@ -55,15 +55,15 @@ class StoreController extends Controller
 
 
     /**
-     * Store a newly created resource in storage.
+     * Platform a newly created resource in storage.
      *
      * @OA\Post(
-     *      path="/api/stores",
-     *      operationId="post",
-     *      tags={"Stores"},
-     *      summary="Create a new Store",
-     *      description="Stores the Game Store in the DB",
+     *      path="/api/platforms",
+     *      operationId="post_platform",
+     *      tags={"Platforms"},
+     *      summary="Create a new platform",
      *      security={{"bearerAuth":{}}}, 
+     *      description="Stores the platform in the DB",
      *      @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(
@@ -82,20 +82,24 @@ class StoreController extends Controller
      * )
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\StoreResource
+     * @return \Illuminate\Http\PlatformResource
      */
 
+
+    //validates the data in Requests
     
-    public function store(StoreStoreRequest $request)
+    public function store(StorePlatformRequest $request)
     {
-        $store = Store::create([
+        $platform = Platform::create([
             'name' => $request->name,
-            'address' => $request->address
+            'platform_developer' => $request->platform_developer,
+            'description' => $request->description
         ]);
-        return new StoreResource($store);
+        return new PlatformResource($platform);
     }
 
 
+    
 
     //SHOW     BY     ID
 
@@ -105,12 +109,12 @@ class StoreController extends Controller
     /**
      * Display the specified resource.
      * @OA\Get(
-    *     path="/api/stores/{id}",
-    *     description="Gets a store by ID",
-    *     tags={"Stores"},
+    *     path="/api/platforms/{id}",
+    *     description="Gets a platform by ID",
+    *     tags={"Platforms"},
     *          @OA\Parameter(
         *          name="id",
-        *          description="Store id",
+        *          description="Platform id",
         *          required=true,
         *          in="path",
         *          @OA\Schema(
@@ -129,29 +133,29 @@ class StoreController extends Controller
         *          description="Forbidden"
         *      )
  * )
-     * @param  \App\Models\Store  $store
-     * @return \Illuminate\Http\StoreResource
+     * @param  \App\Models\Platform  $platform
+     * @return \Illuminate\Http\PlatformResource
      */
 
 
-    public function show(Store $store)
+    public function show(Platform $platform)
     {
-        return new StoreResource($store);
+        return new PlatformResource($platform);
     }
 
     /**
      *Update the specified resource in storage
      *
      * @OA\Put(
-     *      path="/api/stores/{id}",
-     *      operationId="stores_put",
-     *      tags={"Stores"},
-     *      summary="Update a stores details",
-     *      description="Stores the updated Game Store in the DB",
+     *      path="/api/platforms/{id}",
+     *      operationId="platforms_put",
+     *      tags={"Platforms"},
+     *      summary="Create a new Game",
      *      security={{"bearerAuth":{}}}, 
+     *      description="Updates the platform in the DB",
      *      @OA\Parameter(
         *          name="id",
-        *          description="Store id",
+        *          description="Platform id",
         *          required=true,
         *          in="path",
         *          @OA\Schema(
@@ -160,9 +164,10 @@ class StoreController extends Controller
      *      @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(
-     *            required={"id","name", "address"},
-     *            @OA\Property(property="name", type="string", format="string", example="Dublin Game Shop"),
-     *            @OA\Property(property="address", type="string", format="string", example="123 fake street, Dublin, Ireland")
+     *            required={"id","name", "platform_developer", "description"},
+     *            @OA\Property(property="name", type="string", format="string", example="Ea Sports"),
+     *             @OA\Property(property="platform_developer", type="string", format="string", example="Mobile"),
+     *            @OA\Property(property="description", type="string", format="string", example="EA Sports is an American bsed gaming developer")
      *
      *          )
      *      ),
@@ -176,11 +181,11 @@ class StoreController extends Controller
      * )
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\StoreResource
+     * @return \Illuminate\Http\PlatformResource
      */
-    public function update(UpdateStoreRequest $request, Store $store)
+    public function update(UpdatePlatformRequest $request, Platform $platform)
     {
-        $store->update($request->all());
+        $platform->update($request->all());
     }
 
 
@@ -194,13 +199,13 @@ class StoreController extends Controller
      *
      *
      * @OA\Delete(
-     *    path="/api/stores/{id}",
-     *    operationId="store_destroy",
-     *    tags={"Stores"},
-     *    summary="Delete a Store",
-     *    description="Delete a Store By ID",
+     *    path="/api/platforms/{id}",
+     *    operationId="platforms_destroy",
+     *    tags={"Platforms"},
+     *    summary="Delete a Platform",
+     *    description="Delete a Platform By ID",
      *    security={{"bearerAuth":{}}}, 
-     *    @OA\Parameter(name="id", in="path", description="Id of a Store", required=true,
+     *    @OA\Parameter(name="id", in="path", description="Id of a Platform", required=true,
      *        @OA\Schema(type="integer")
      *    ),
      *    @OA\Response(
@@ -215,12 +220,12 @@ class StoreController extends Controller
      *  )
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Store  $store
+     * @param  \App\Models\Platform  $platform
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Store $store)
+    public function destroy(Platform $platform)
     {
-        $store->delete();
+        $platform->delete();
         return response()->json(null, Response::HTTP_NO_CONTENT);
     }
 }

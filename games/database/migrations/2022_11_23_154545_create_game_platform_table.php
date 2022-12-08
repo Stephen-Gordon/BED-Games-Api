@@ -18,8 +18,8 @@ return new class extends Migration
             $table->unsignedBigInteger('game_id');
             $table->unsignedBigInteger('platform_id');
             
-            $table->foreign('game_id')->references('id')->on('games')->onUpdate('cascade')->onDelete('restrict');
-            $table->foreign('platform_id')->references('id')->on('platforms')->onUpdate('cascade')->onDelete('restrict');
+            $table->foreign('game_id')->references('id')->on('games')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('platform_id')->references('id')->on('platforms')->onUpdate('cascade')->onDelete('cascade');
             
             $table->timestamps();
         });

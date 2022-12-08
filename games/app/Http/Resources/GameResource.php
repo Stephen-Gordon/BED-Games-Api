@@ -29,9 +29,9 @@ class GameResource extends JsonResource
     {
         $platforms = array();
 
-       /*   foreach ($this->$platforms as $platform){
-            array_push($platforms, $platform);
-        }  */
+         foreach ($this->platforms as $platform){
+            array_push($platforms, $platform->name);
+        }  
      
 
         return [
@@ -43,7 +43,7 @@ class GameResource extends JsonResource
             'store_id' => $this->store_id,
             'store_address' => $this->store->address,
             'store_name' => $this->store->name,
-            'platforms' => $this->platforms
+            'platforms' => $platforms
         ];
     }
 }

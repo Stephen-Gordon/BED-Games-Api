@@ -153,16 +153,6 @@
                 }
             }
         },
-        "/": {
-            "get": {
-                "description": "Home Page",
-                "responses": {
-                    "default": {
-                        "description": "Welcomee page"
-                    }
-                }
-            }
-        },
         "/api/games": {
             "get": {
                 "tags": [
@@ -198,8 +188,8 @@
                                 "required": [
                                     "title",
                                     "description",
-                                    "publisher",
-                                    "platform",
+                                    "store_id",
+                                    "platforms",
                                     "category",
                                     "price"
                                 ],
@@ -214,15 +204,15 @@
                                         "format": "string",
                                         "example": "Example description"
                                     },
-                                    "publisher": {
-                                        "type": "string",
-                                        "format": "string",
-                                        "example": "EA"
+                                    "store_id": {
+                                        "type": "integer",
+                                        "format": "integer",
+                                        "example": "1"
                                     },
-                                    "platform": {
-                                        "type": "string",
-                                        "format": "string",
-                                        "example": "PC"
+                                    "platforms": {
+                                        "type": "integer",
+                                        "format": "integer",
+                                        "example": "1"
                                     },
                                     "category": {
                                         "type": "string",
@@ -260,7 +250,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/games/{id}": {
@@ -321,8 +316,6 @@
                                     "id",
                                     "title",
                                     "description",
-                                    "publisher",
-                                    "platform",
                                     "category",
                                     "price"
                                 ],
@@ -336,16 +329,6 @@
                                         "type": "string",
                                         "format": "string",
                                         "example": "Example description"
-                                    },
-                                    "publisher": {
-                                        "type": "string",
-                                        "format": "string",
-                                        "example": "EA"
-                                    },
-                                    "platform": {
-                                        "type": "string",
-                                        "format": "string",
-                                        "example": "PC"
                                     },
                                     "category": {
                                         "type": "string",
@@ -383,7 +366,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             },
             "delete": {
                 "tags": [
@@ -423,7 +411,248 @@
                             }
                         }
                     }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/platforms": {
+            "get": {
+                "tags": [
+                    "Platforms"
+                ],
+                "summary": "Display a listing of the resource.",
+                "description": "Displays all the platforms",
+                "operationId": "caf905e7ed08db934a97ce99cab2ca17",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation, Returns a list of Platforms in JSON format"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
                 }
+            },
+            "post": {
+                "tags": [
+                    "Platforms"
+                ],
+                "summary": "Create a new platform",
+                "description": "Stores the platform in the DB",
+                "operationId": "post_platform",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "address"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "Dublin Game Shop"
+                                    },
+                                    "address": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "123 fake street, Dublin, Ireland"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "integer",
+                                            "example": ""
+                                        },
+                                        "data": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/platforms/{id}": {
+            "get": {
+                "tags": [
+                    "Platforms"
+                ],
+                "summary": "Display the specified resource.",
+                "description": "Gets a platform by ID",
+                "operationId": "00252b43bfb7d786058ffa496be2ccbe",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Platform id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Platforms"
+                ],
+                "summary": "Create a new Game",
+                "description": "Updates the platform in the DB",
+                "operationId": "platforms_put",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Platform id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "id",
+                                    "name",
+                                    "platform_developer",
+                                    "description"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "Ea Sports"
+                                    },
+                                    "platform_developer": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "Mobile"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "EA Sports is an American bsed gaming developer"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "integer",
+                                            "example": ""
+                                        },
+                                        "data": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Platforms"
+                ],
+                "summary": "Delete a Platform",
+                "description": "Delete a Platform By ID",
+                "operationId": "platforms_destroy",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id of a Platform",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status_code": {
+                                            "type": "integer",
+                                            "example": "204"
+                                        },
+                                        "data": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/stores": {
@@ -499,7 +728,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/stores/{id}": {
@@ -598,7 +832,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             },
             "delete": {
                 "tags": [
@@ -638,7 +877,23 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "name": "bearerAuth",
+                "in": "header",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
             }
         }
     }

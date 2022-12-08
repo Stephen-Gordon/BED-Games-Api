@@ -97,9 +97,7 @@ class AuthController extends Controller
         }
     }
 
-
-
-    /**
+/**
      * Login
      *
      * @OA\Post(
@@ -107,7 +105,7 @@ class AuthController extends Controller
      *      operationId="login",
      *      tags={"Auth"},
      *      summary="User Login",
-     *      description=s"User can login with an email and password",
+     *      description="User can login with an email and password",
      *      @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(

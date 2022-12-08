@@ -1,12 +1,14 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Http\Resources\GameCollection;
-use App\Http\Resources\GameResource;
 use App\Models\Game;
-use Illuminate\Http\Response; 
-
 use Illuminate\Http\Request;
+use Illuminate\Http\Response; 
+use App\Http\Resources\GameResource;
+
+use App\Http\Resources\GameCollection;
+use App\Http\Requests\StoreGameRequest;
+use App\Http\Requests\UpdateGamemRequest;
 
 class GameController extends Controller
 
@@ -60,14 +62,15 @@ class GameController extends Controller
      *      tags={"Games"},
      *      summary="Create a new Game",
      *      description="Stores the game in the DB",
+     *      security={{"bearerAuth":{}}}, 
      *      @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(
-     *            required={"title", "description", "publisher", "platform", "category", "price"},
+     *            required={"title", "description", "store_id", "platforms", "category", "price"},
      *            @OA\Property(property="title", type="string", format="string", example="Sample Title"),
      *            @OA\Property(property="description", type="string", format="string", example="Example description"),
-     *            @OA\Property(property="publisher", type="string", format="string", example="EA"),
-     *            @OA\Property(property="platform", type="string", format="string", example="PC"),
+     *            @OA\Property(property="store_id", type="integer", format="integer", example="1"),
+     *            @OA\Property(property="platforms", type="integer", format="integer", example="1"),
      *            @OA\Property(property="category", type="string", format="string", example="Sports"),
      *             @OA\Property(property="price", type="integer", format="integer", example="1")
      *          )
@@ -86,7 +89,7 @@ class GameController extends Controller
      */
 
 
-    public function store(Request $request)
+    public function store(StoreGameRequest $request)
     {
         
         $game = Game::create([
@@ -155,6 +158,7 @@ class GameController extends Controller
      *      tags={"Games"},
      *      summary="Create a new Game",
      *      description="Stores the game in the DB",
+     *      security={{"bearerAuth":{}}}, 
      *      @OA\Parameter(
         *          name="id",
         *          description="Game id",
@@ -188,7 +192,7 @@ class GameController extends Controller
 
 
 
-    public function update(Request $request, Game $game)
+    public function update(UpdateGamemRequest $request, Game $game)
     {
         $game->update($request->only([
             'title', 
@@ -197,6 +201,8 @@ class GameController extends Controller
             'price',
             'store_id'
         ]));
+        $game->platforms()->attach($request->platforms);
+
         
         return new GameResource($game);
     }
@@ -213,6 +219,7 @@ class GameController extends Controller
      *    tags={"Games"},
      *    summary="Delete a Game",
      *    description="Delete a Game By ID",
+     *    security={{"bearerAuth":{}}}, 
      *    @OA\Parameter(name="id", in="path", description="Id of a Game", required=true,
      *        @OA\Schema(type="integer")
      *    ),

@@ -19,12 +19,12 @@ class PlatformSeeder extends Seeder
     public function run()
     {
         Platform::factory()
-        ->times(3)
+        ->times(4)
         ->create();
 
         foreach(Platform::all() as $platform)
         {
-            $games = Game::inRandomOrder()->take(rand(1,3))->pluck('id');
+            $games = Game::inRandomOrder()->take(rand(1,4))->pluck('id');
             $platform->games()->attach($games);
         }
     }

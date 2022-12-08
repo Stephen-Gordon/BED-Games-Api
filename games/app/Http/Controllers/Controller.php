@@ -22,16 +22,17 @@ use Illuminate\Routing\Controller as BaseController;
  *         url="https://www.apache.org/licenses/LICENSE-2.0.html"
  *     )
  * )
+ * @OA\SecurityScheme(
+*      securityScheme="bearerAuth",
+*      in="header",
+*      name="bearerAuth",
+*      type="http",
+*      scheme="bearer",
+*      bearerFormat="JWT",
+* ),
  * 
- * @OA\Get(
- *   path="/",
- *   description="Home Page",
- *   @OA\Response(
- *     response="default",
- *     description="Welcomee page")
- *   )
  *   
- * )
+ * 
  * 
  */
 
