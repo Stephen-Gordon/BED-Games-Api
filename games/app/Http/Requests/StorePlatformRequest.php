@@ -24,9 +24,9 @@ class StorePlatformRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required'],
-            'platform_developer' => ['required'],
-            'description' => ['required']
+            'name' => ['required', 'min:2', 'string'],
+            'platform_developer' => ['required', 'string', 'min:2', 'max:100' ],
+            'description' => ['required', 'string', 'min:5', 'max:200']
         ];
     }
 }

@@ -26,9 +26,9 @@ class UpdatePlatformRequest extends FormRequest
         $method = $this->method();
         if($method == 'PUT'){
             return [
-                'name' => ['required'],
-                'platform_developer' => ['required'],
-                'description' => ['required'],
+                'name' => ['required', 'min:2', 'string'],
+                'platform_developer' => ['required', 'string', 'min:2', 'max:100' ],
+                'description' => ['required', 'string', 'min:5', 'max:200'],
             ];
         }
         //else patch
@@ -37,9 +37,9 @@ class UpdatePlatformRequest extends FormRequest
         //If it comes in the request then its required, if not then its not required
         else{
             return[
-                'name' => ['sometimes', 'required', 'max:3'],
-                'platform_developer' => ['sometimes', 'required'],
-                'description' => ['sometimes', 'required'],
+                'name' => ['sometimes', 'required', 'min:2', 'string'],
+                'platform_developer' => ['sometimes', 'required', 'string', 'min:2', 'max:100' ],
+                'description' => ['sometimes', 'required', 'string', 'min:5', 'max:200'],
             ];
         }
        

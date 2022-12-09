@@ -26,15 +26,15 @@ class UpdateStoreRequest extends FormRequest
         $method = $this->method();
         if($method == 'PUT'){
             return [
-                'name' => ['required'],
-                'address' => ['required'],
+                'name' => ['required', 'string','min:2'],
+                'address' => ['required', 'string', 'min:2', 'max:250']
             ];
         }
         //else patch
         else{
             return[
-                'name' => ['sometimes', 'required'],
-                'address' => ['sometimes', 'required'],
+                'name' => ['sometimes', 'required' , 'string','min:2'],
+                'address' => ['sometimes', 'required', 'string', 'min:2', 'max:250']
             ];
         }
        

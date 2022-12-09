@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateGamemRequest extends FormRequest
+class UpdateGameRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -39,11 +39,11 @@ class UpdateGamemRequest extends FormRequest
         //If it comes in the requssest then its required, if not then its not required
         else{
             return[
-                'name' => ['sometimes', 'required'],
-                'description' => ['sometimes', 'required'],
-                'category' => ['sometimes', 'required'],
-                'price' => ['sometimes', 'required'],
-                'store_id' => ['sometimes', 'required'],
+                'name' => ['sometimes', 'required' , 'string'],
+                'description' => ['sometimes', 'required', 'string'],
+                'category' => ['sometimes', 'required', 'string'],
+                'price' => ['sometimes', 'required', 'integer'],
+                'store_id' => ['sometimes', 'required', 'integer'],
             ];
         }
        

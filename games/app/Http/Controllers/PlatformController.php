@@ -44,7 +44,7 @@ class PlatformController extends Controller
 
     public function index()
     {
-        return new PlatformCollection(Platform::paginate(1));
+        return new PlatformCollection(Platform::paginate(10));
     }
 
 

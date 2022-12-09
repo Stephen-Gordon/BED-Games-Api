@@ -317,7 +317,9 @@
                                     "title",
                                     "description",
                                     "category",
-                                    "price"
+                                    "price",
+                                    "store_id",
+                                    "platforms"
                                 ],
                                 "properties": {
                                     "title": {
@@ -329,6 +331,16 @@
                                         "type": "string",
                                         "format": "string",
                                         "example": "Example description"
+                                    },
+                                    "store_id": {
+                                        "type": "integer",
+                                        "format": "integer",
+                                        "example": "1"
+                                    },
+                                    "platforms": {
+                                        "type": "integer",
+                                        "format": "integer",
+                                        "example": "1"
                                     },
                                     "category": {
                                         "type": "string",
@@ -771,7 +783,7 @@
                 "tags": [
                     "Stores"
                 ],
-                "summary": "Create a new Game",
+                "summary": "Update a stores details",
                 "description": "Stores the updated Game Store in the DB",
                 "operationId": "stores_put",
                 "parameters": [
